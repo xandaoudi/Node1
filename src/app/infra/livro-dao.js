@@ -7,12 +7,12 @@ class LivroDao {
   adiciona(livro) {
     return new Promise((resolve, reject) => {
       this._db.run(`
-        INSERT INTO livros (
-          titulo, 
-          preco,
-          descricao
-        ) values (?, ?, ?)
-      `,
+              INSERT INTO livros (
+                  titulo, 
+                  preco,
+                  descricao
+              ) values (?,?,?)
+              `,
         [
           livro.titulo,
           livro.preco,
@@ -20,7 +20,7 @@ class LivroDao {
         ],
         function (err) {
           if (err) {
-            console.log(err)
+            console.log(err);
             return reject('Não foi possível adicionar o livro!')
           }
 
@@ -30,12 +30,12 @@ class LivroDao {
     })
   }
 
-  lista(callback) {
+  lista() {
     return new Promise((resolve, reject) => {
       this._db.all(
-        'SELECT *FROM livros',
+        'SELECT * FROM livros',
         (erro, resultados) => {
-          if (erro) return reject('Não foi possível listar os livros')
+          if (erro) return reject('Não foi possível listar os livros!')
 
           return resolve(resultados)
         }
@@ -44,15 +44,19 @@ class LivroDao {
   }
 
   buscaPorId(id) {
+
     return new Promise((resolve, reject) => {
       this._db.get(
         `
-        SELECT * FROM livros where id = ?
-        `,
+                  SELECT *
+                  FROM livros
+                  WHERE id = ?
+              `,
         [id],
         (erro, livro) => {
-          if (erro) return reject('Não foi possível encontrar o livro')
-
+          if (erro) {
+            return reject('Não foi possível encontrar o livro!')
+          }
           return resolve(livro)
         }
       )
@@ -61,14 +65,13 @@ class LivroDao {
 
   atualiza(livro) {
     return new Promise((resolve, reject) => {
-      this._db.run(
-        `
-        UPDATE livros SET 
-        titulo = ?,
-        preco = ?
-        descricao = ?
-        where id = ?
-        `,
+      this._db.run(`
+              UPDATE livros SET
+              titulo = ?,
+              preco = ?,
+              descricao = ?
+              WHERE id = ?
+          `,
         [
           livro.titulo,
           livro.preco,
@@ -76,25 +79,30 @@ class LivroDao {
           livro.id
         ],
         erro => {
-          if (erro) return reject('Não foi possível atualizar o livro')
+          if (erro) {
+            return reject('Não foi possível atualizar o livro!')
+          }
 
           resolve()
-        }
-      )
+        })
     })
   }
 
   remove(id) {
+
     return new Promise((resolve, reject) => {
       this._db.get(
         `
-        DELETE FROM livros where id = ?
-        `,
+                  DELETE 
+                  FROM livros
+                  WHERE id = ?
+              `,
         [id],
         (erro) => {
-          if (erro) return reject('Não foi possível remover o livro')
-
-          return resolve
+          if (erro) {
+            return reject('Não foi possível remover o livro!')
+          }
+          return resolve()
         }
       )
     })
