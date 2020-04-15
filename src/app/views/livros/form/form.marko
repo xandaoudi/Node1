@@ -1,7 +1,7 @@
 <html>
     <body>
         <h1>Cadastro de livros</h1>
-
+        
         <form action="/livros" method="post">
 
             <div if(data.livro.id)>
@@ -19,7 +19,7 @@
             </div>
             <div>
                 <label for="descricao">Descrição:</label>
-                <textarea cols="20" rows="10"  id="descricao" name="descricao"  placeholder="fale sobre o livro">${data.livro.descricao}</textarea>
+                <textarea cols="20" rows="10"  id="descricao" name="descricao" placeholder="fale sobre o livro">${data.livro.descricao}</textarea>
             </div>
 
             <input type="submit" value="Salvar" />
